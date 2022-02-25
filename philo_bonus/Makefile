@@ -1,7 +1,7 @@
-NAME = philo
+NAME = philo_bonus
 CC = cc
 OBJDIR = ./objs
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 
 HEADER = philo.h
 SRC = $(wildcard *.c)
