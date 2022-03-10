@@ -1,8 +1,7 @@
 NAME = philo_bonus
 CC = cc
 OBJDIR = ./objs
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
-
+CFLAGS = -Wall -Wextra -Werror
 HEADER = philo.h
 SRC = $(wildcard *.c)
 OBJ = $(addprefix $(OBJDIR)/,$(notdir $(SRC:.c=.o)))
@@ -17,7 +16,7 @@ $(NAME):    $(OBJDIR) $(OBJ)
 
 $(OBJDIR):
 	@if [ ! -d $(OBJDIR) ] ; then echo "creating $(OBJDIR)" ; mkdir $(OBJDIR); fi
-	
+
 clean:
 	@if [ -d $(OBJDIR) ] ; then echo "deleting $(OBJDIR)" ; rm -r $(OBJDIR); fi
 

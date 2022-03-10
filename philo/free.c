@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 16:09:48 by bclarind          #+#    #+#             */
-/*   Updated: 2022/02/25 18:21:25 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/04 12:38:41 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	free_mutexes(t_philo *philosophers)
 		if (pthread_mutex_unlock(philo->mutex_l))
 			return ;
 		if (pthread_mutex_destroy(philo->mutex_l))
-			return ;
-		if (pthread_mutex_destroy(philo->ate_mutex))
 			return ;
 		philo = philo->next;
 	}

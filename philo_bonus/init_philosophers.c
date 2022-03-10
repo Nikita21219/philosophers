@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 16:06:46 by bclarind          #+#    #+#             */
-/*   Updated: 2022/03/10 21:00:28 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:49:44 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_el_add_back(t_philo **lst, t_philo *new)
 	return (0);
 }
 
-int	init_philosophers(t_philo **philo, t_data *data)
+void	init_philosophers(t_philo **philo, t_data *data)
 {
 	int	i;
 	t_p	th;
@@ -75,32 +75,8 @@ int	init_philosophers(t_philo **philo, t_data *data)
 	{
 		if (ft_el_add_back(philo, init_philosopher(th, i++, data, th_die)))
 		{
-			while (i--)
-			{
-				free(*philo);
-				*philo = (*philo)->next;
-			}
-			free(philo);
-			return (1);
+			free_all(*philo);
+			print_error("malloc error");
 		}
 	}
-	return (0);
-}
-
-int	init_mutexes(t_data *dt, t_m *mut, t_m *last_meal, t_m *ate_mut)
-{
-	int	i;
-
-	i = 0;
-	while (i < dt->num_of_philo)
-	{
-		if (pthread_mutex_init(&last_meal[i], NULL))
-			return (1);
-		if (pthread_mutex_init(&mut[i], NULL))
-			return (1);
-		if (pthread_mutex_init(&ate_mut[i], NULL))
-			return (1);
-		i++;
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:48:23 by bclarind          #+#    #+#             */
-/*   Updated: 2022/02/25 17:50:24 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:35:35 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	check_all_ate(t_philo *philosophers)
 	}
 	if (count == philosophers->data->num_of_philo)
 	{
-		pthread_mutex_lock(&philo->data->die_write);
-		philo->data->die = philo->num + 1;
-		pthread_mutex_unlock(&philo->data->die_write);
+		pthread_mutex_lock(&philosophers->data->die_write);
+		philosophers->data->die = philosophers->num + 1;
+		pthread_mutex_unlock(&philosophers->data->die_write);
 		return (1);
 	}
 	return (0);

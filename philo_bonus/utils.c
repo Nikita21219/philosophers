@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 16:05:13 by bclarind          #+#    #+#             */
-/*   Updated: 2022/02/25 18:08:27 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:13:09 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,9 @@ long long	get_timestamp(void)
 {
 	struct timeval	timestamp;
 
-	gettimeofday(&timestamp, NULL);
+	if (gettimeofday(&timestamp, NULL) == -1)
+		print_error("gettimeofday error");
 	return ((timestamp.tv_sec * 1000) + (timestamp.tv_usec / 1000));
-}
-
-void	join_mut_and_ph(t_m *mut, t_philo *philo, t_m *l_m, t_m *ate_mut)
-{
-	int	i;
-
-	i = 0;
-	while (philo->next)
-	{
-		philo->mutex_l = &mut[i];
-		philo->mutex_r = &mut[i + 1];
-		philo->check_last_meal = &l_m[i];
-		philo->ate_mutex = &ate_mut[i];
-		philo = philo->next;
-		i++;
-	}
-	philo->mutex_l = &mut[i];
-	philo->mutex_r = &mut[0];
-	philo->check_last_meal = &l_m[i];
-	philo->ate_mutex = &ate_mut[i];
 }
 
 void	my_usleep(int time_to_sleep)
@@ -79,4 +60,21 @@ void	my_usleep(int time_to_sleep)
 			return ;
 		usleep(250);
 	}
+}
+
+void	free_all(t_philo *philo)
+{
+	t_philo	*tmp;
+
+	while (philo)
+	{
+		tmp = philo->next;
+		free(philo);
+		philo = tmp;
+	}
+	sem_unlink("/forks");
+	sem_unlink("/sem_eat");
+	sem_unlink("/sem_print");
+	sem_unlink("/die_write");
+	sem_unlink("/sem_all_ate");
 }

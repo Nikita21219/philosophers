@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 16:03:28 by bclarind          #+#    #+#             */
-/*   Updated: 2022/02/25 18:03:20 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:44:31 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ int	init_argv(t_data *data, int argc, char **argv)
 		printf("Error\n");
 		return (1);
 	}
-	pthread_mutex_init(&data->print_mutex, NULL);
-	pthread_mutex_init(&data->die_write, NULL);
+	if (pthread_mutex_init(&data->print_mutex, NULL))
+		return (1);
+	if (pthread_mutex_init(&data->die_write, NULL))
+		return (1);
 	data->num_of_philo = ft_atoi_mod(*(argv + 1));
 	data->time_to_die = ft_atoi_mod(*(argv + 2));
 	data->time_to_eat = ft_atoi_mod(*(argv + 3));

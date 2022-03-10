@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 09:29:15 by a1                #+#    #+#             */
-/*   Updated: 2022/02/25 18:29:27 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/10 21:01:57 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,12 @@ int	main(int argc, char **argv)
 	philo = NULL;
 	if (init_argv(&data, argc, argv))
 		return (0);
-	forks = malloc(sizeof(t_m) * data.num_of_philo);
-	ate_mutexes = malloc(sizeof(t_m) * data.num_of_philo);
-	check_last_meal = malloc(sizeof(t_m) * data.num_of_philo);
-	init_mutexes(&data, forks, check_last_meal, ate_mutexes);
-	init_philosophers(&philo, &data);
+	if (malloc_mut(&forks, &ate_mutexes, &check_last_meal, data))
+		return (0);
+	if (init_mutexes(&data, forks, check_last_meal, ate_mutexes))
+		return (0);
+	if (init_philosophers(&philo, &data))
+		return (0);
 	join_mut_and_ph(forks, philo, check_last_meal, ate_mutexes);
 	main_logic(philo);
 	free_all(philo, check_last_meal, ate_mutexes, forks);

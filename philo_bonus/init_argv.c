@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 16:03:28 by bclarind          #+#    #+#             */
-/*   Updated: 2022/02/25 18:03:20 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:25:20 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,25 @@ int	is_error(int argc, char **argv)
 int	init_argv(t_data *data, int argc, char **argv)
 {
 	if (is_error(argc, argv))
-	{
-		printf("Error\n");
-		return (1);
-	}
-	pthread_mutex_init(&data->print_mutex, NULL);
-	pthread_mutex_init(&data->die_write, NULL);
+		print_error("Error");
 	data->num_of_philo = ft_atoi_mod(*(argv + 1));
 	data->time_to_die = ft_atoi_mod(*(argv + 2));
 	data->time_to_eat = ft_atoi_mod(*(argv + 3));
 	data->time_to_sleep = ft_atoi_mod(*(argv + 4));
+	data->sem_print = sem_open("/sem_print", O_CREAT | O_EXCL, 0644, 1);
+	if (data->sem_print == SEM_FAILED)
+		print_error("SEM_FAILED");
+	data->die_write = sem_open("/die_write", O_CREAT | O_EXCL, 0644, 1);
+	if (data->die_write == SEM_FAILED)
+		print_error("SEM_FAILED");
 	data->die = -1;
+	data->num_must_eat = -1;
 	if (argc == 6)
+	{
 		data->num_must_eat = ft_atoi_mod(*(argv + 5));
-	else
-		data->num_must_eat = -1;
+		if (data->num_must_eat == 0)
+			exit(0);
+	}
+	sem_unlinks();
 	return (0);
 }

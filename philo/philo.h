@@ -6,7 +6,7 @@
 /*   By: bclarind <bclarind@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 09:36:29 by a1                #+#    #+#             */
-/*   Updated: 2022/02/25 18:21:33 by bclarind         ###   ########.fr       */
+/*   Updated: 2022/03/10 21:04:08 by bclarind         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,15 @@ int			init_argv(t_data *data, int argc, char **argv);
 long long	ft_atoi_mod(const char *str);
 int			ft_isdigit(int c);
 long long	get_timestamp(void);
-void		init_philosophers(t_philo **philo, t_data *data);
+int			init_philosophers(t_philo **philo, t_data *data);
 void		free_mutexes(t_philo *philosophers);
 void		my_usleep(int time_to_sleep);
 void		main_logic(t_philo *philosophers);
 void		*thread(void *arg);
 int			is_die(t_philo *philo);
-void		init_mutexes(t_data *dt, t_m *mut, t_m *last_meal, t_m *ate_mut);
+int			init_mutexes(t_data *dt, t_m *mut, t_m *last_meal, t_m *ate_mut);
 void		join_mut_and_ph(t_m *mut, t_philo *philo, t_m *l_m, t_m *ate_mut);
 void		free_all(t_philo *philo, t_m *last_meal, t_m *ate_mut, t_m *forks);
+int			malloc_mut(t_m **forks, t_m **ate_m, t_m **last_meal, t_data data);
 
 #endif

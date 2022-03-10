@@ -2,7 +2,6 @@ NAME = philo
 CC = cc
 OBJDIR = ./objs
 CFLAGS = -Wall -Wextra -Werror
-
 HEADER = philo.h
 SRC = $(wildcard *.c)
 OBJ = $(addprefix $(OBJDIR)/,$(notdir $(SRC:.c=.o)))
